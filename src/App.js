@@ -1,6 +1,7 @@
 import './App.css';
+
 import React, { useState, useEffect } from 'react';
-import { Slider, Button, Typography, Stack } from '@mui/material';
+import { Slider, Button, Typography, Grid } from '@mui/material';
 
 function App() {
   const [distance, setDistance] = useState(0);
@@ -37,10 +38,12 @@ function App() {
   };
 
   useEffect(() => {
-    // TODO: distance logic here!
-
-    setDistance(prevDistance => prevDistance + 0.01);
-  }, [speed, elapsedTime]);
+    setDistance((prevDistance) => {
+      const newDistance = ((speed / 3600) * elapsedTime).toFixed(3)
+      const newDistanceTrimmed = newDistance.slice(0, newDistance.lastIndexOf('.') + 3);
+      return parseFloat(newDistanceTrimmed);
+    }
+  )}, [speed, elapsedTime]);
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -50,17 +53,26 @@ function App() {
   };
 
   return (
-    <div>
-      <h1>Distance: {distance.toFixed(2)} miles</h1>
-      <h2>Time: {formatTime(elapsedTime)}</h2>
-      <Slider value={speed} onChange={handleSpeedChange} min={0} max={12} step={0.5} />
-      <Typography>{speed}</Typography>
+    <Grid container spacing={2} justify="center" alignItems="center" style={{ minHeight: '100vh' }}>
+      <Grid item xs={12}>
+        <Typography variant="h4" align="center">Distance: {distance} miles</Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography variant="h4" align="center">Time: {formatTime(elapsedTime)}</Typography>
+      </Grid>
+      <Grid style={{ margin: "0 auto" }} item xs={9}>
+        <Slider value={speed} onChange={handleSpeedChange} min={0} max={12} step={0.5} />
+      </Grid>
+      <Grid style={{ margin: "0 auto" }} item xs={8}>
+        <Typography variant="h4" align="center">{speed}</Typography>
+      </Grid>
 
-      <Stack>
-        <Button variant="contained" color="primary" onClick={handleStart}>Submit</Button>
-        <Button variant="contained" color="secondary" onClick={handleStop}>Stop</Button>
-      </Stack>
-    </div>
+      <Grid item xs={8} style={{ margin: "0 auto" }}>
+          <Button variant="contained" color="primary" onClick={handleStart}>Start Run</Button>
+          <Button></Button>
+          <Button variant="contained" color="secondary" onClick={handleStop}>Stop</Button>
+      </Grid>
+    </Grid>
   );
 }
 
