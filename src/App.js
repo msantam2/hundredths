@@ -55,7 +55,7 @@ function App() {
   return (
     <Grid container spacing={2} justify="center" alignItems="center" style={{ minHeight: '100vh' }}>
       <Grid item xs={12}>
-        <Typography variant="h4" align="center">Distance: {distance} miles</Typography>
+        <Typography style={{ fontWeight: "bold" }} variant="h4" align="center">Distance: {distance} miles</Typography>
       </Grid>
       <Grid item xs={12}>
         <Typography variant="h4" align="center">Time: {formatTime(elapsedTime)}</Typography>
