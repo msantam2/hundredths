@@ -37,7 +37,9 @@ function App() {
   };
 
   useEffect(() => {
-    setDistance(speed * elapsedTime / 3600);
+    // TODO: distance logic here!
+
+    setDistance(prevDistance => prevDistance + 0.01);
   }, [speed, elapsedTime]);
 
   const formatTime = (time) => {
